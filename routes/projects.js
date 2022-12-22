@@ -106,11 +106,13 @@ db.once('open', function (callback) { // Add the listener for db events
     let newData = req.body;
 
     Project.findOneAndUpdate(id, newData, {upsert: true}, function(err, project) {
-      if (err) return res.send(500, {error: err});
-
-      let jsonObj = JSON.stringify(project);
-      res.contentType('application/json');
-      res.send("Project is updated");
+      if (err) {
+        return res.send(500, {error: err});
+      } else {
+        return res.json([
+          'Project updated'
+      ], 200);
+      }
     });
   });
 }); // DB connection
