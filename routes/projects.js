@@ -103,11 +103,14 @@ db.once('open', function (callback) { // Add the listener for db events
   router.put('/:id', function(req, res, next) {
 
     var id = {'_id': req.params.id};
-    req.newData = req.body;
+    let newData = req.body;
 
-    Project.findOneAndUpdate(id, req.newData, {upsert: true}, function(err, doc) {
+    Project.findOneAndUpdate(id, newData, {upsert: true}, function(err, project) {
       if (err) return res.send(500, {error: err});
-      return res.send('Project saved.');
+
+      let jsonObj = JSON.stringify(project);
+      res.contentType('application/json');
+      res.send("Project is updated");
     });
   });
 }); // DB connection
