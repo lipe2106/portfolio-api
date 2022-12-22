@@ -100,7 +100,16 @@ db.once('open', function (callback) { // Add the listener for db events
   });
 
   /* Update project */
-  
+  router.put('/:id', function(req, res, next) {
+
+    var id = {'_id': req.params.id};
+    req.newData = req.body;
+
+    Project.findOneAndUpdate(id, req.newData, {upsert: true}, function(err, doc) {
+      if (err) return res.send(500, {error: err});
+      return res.send('Project saved.');
+    });
+  });
 }); // DB connection
 
 module.exports = router;
