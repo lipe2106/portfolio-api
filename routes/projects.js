@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+
+
 const bodyParser = require('body-parser');
 router.use(
   bodyParser.urlencoded({
@@ -28,7 +30,7 @@ db.once('open', function (callback) { // Add the listener for db events
 
   // Create scheme model
   let Project = mongoose.model('Project', projectScheme)
-
+ 
 
   /* GET projects */
   router.get('/', function(req, res, next) {
@@ -97,6 +99,8 @@ db.once('open', function (callback) { // Add the listener for db events
     res.send(jsonObj);
   });
 
+  /* Update project */
+  
 }); // DB connection
 
 module.exports = router;
