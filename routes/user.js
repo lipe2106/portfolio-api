@@ -11,94 +11,96 @@ router.use(
 router.use(bodyParser.json());
 
 // Create db scheme
-let projectScheme = mongoose.Schema({
+let userScheme = mongoose.Schema({
   name: String,
   description: String,
-  link: String
+  title: String,
+  quote: String
 });
 
 // Create scheme model
-let Project = mongoose.model('Project', projectScheme)
+let User = mongoose.model('User', userScheme)
 
-/* GET projects */
+/* GET user */
 router.get('/', function(req, res, next) {
 
-  // Get projects from database
-  Project.find(function(err, projects) {
+  // Get info from database
+  User.find(function(err, user) {
     if(err) return console.error(err);
 
-    let jsonObj = JSON.stringify(projects);
+    let jsonObj = JSON.stringify(user);
     res.contentType('application/json');
     res.send(jsonObj);
   });
 });
 
-/* Get specific project by id */
+/* Get specific user by id */
 router.get('/:id', function(req, res, next) {
 
   let id = req.params.id;
 
-  Project.findById(id, function (err, project) {
+  User.findById(id, function (err, user) {
     if (err) throw err;
 
-    let jsonObj = JSON.stringify(project);
+    let jsonObj = JSON.stringify(user);
     res.contentType('application/json');
     res.send(jsonObj); 
   });
 });
 
-/* Delete specific project */
+/* Delete specific user */
 router.delete('/:id', function(req, res, next) {
   let id = req.params.id;
 
-  // Delete project with _id from db
-  Project.deleteOne({ "_id": id }, function (err) {
+  // Delete user with _id from db
+  User.deleteOne({ "_id": id }, function (err) {
     if (err) return handleError(err);
   });
 
-  // Get new project list as response
-  Project.find(function(err, projects) {
+  // Get user as response
+  User.find(function(err, user) {
     if(err) return console.error(err);
 
-    let jsonObj = JSON.stringify(projects);
+    let jsonObj = JSON.stringify(user);
     res.contentType('application/json');
     res.send(jsonObj);
   });
 });
 
 
-/* Add project to database*/
+/* Add userinfo to database*/
 router.post('/', function(req, res, next) {
 
-  // Create a new project
-  let newProject = new Project({ 
+  // Create a new user
+  let newUser = new User({ 
       name: req.body.name, 
       description: req.body.description,
-      link: req.body.link
+      title: req.body.title,
+      quote: req.body.quote
   });	
 
-  // Save new project to db
-  newProject.save(function(err) {
+  // Save new user to db
+  newUser.save(function(err) {
       if(err) return console.error(err);
   });
 
-  let jsonObj = JSON.stringify(newProject);
+  let jsonObj = JSON.stringify(newUser);
   res.contentType('application/json');
   res.send(jsonObj);
 });
 
-/* Update project */
+/* Update userinfo */
 router.put('/:id', function(req, res, next) {
 
   var id = {'_id': req.params.id};
-  let newData = req.body;
+  let newInfo = req.body;
 
-  Project.findOneAndUpdate(id, newData, {upsert: true}, function(err, project) {
+  User.findOneAndUpdate(id, newInfo, {upsert: true}, function(err, project) {
     if (err) {
       return res.send(500, {error: err});
     } else {
       return res.json([
-        'Project updated'
+        'User updated'
     ], 200);
     }
   });

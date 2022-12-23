@@ -7,8 +7,21 @@ var cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const projectsRouter = require('./routes/projects');
+const userRouter = require('./routes/user');
 
 const app = express();
+
+// Database connection
+let mongoose = require('mongoose');
+
+mongoose.connect('mongodb://127.0.0.1:27017/portfolio', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.Promise = global.Promise; // Global use of mongoose
+
+let db = mongoose.connection;
+db.on('error', console.error.bind(console,'connection error:'));
+db.once('open', function (callback) { // Add the listener for db events 
+  console.log("Connected to db");
+});
 
 app.all('/*', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -30,6 +43,7 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/projects', projectsRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,6 +61,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-
-
-module.exports = app;
+module.exports = app, {mongoose};
