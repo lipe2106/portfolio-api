@@ -13,7 +13,8 @@ router.use(bodyParser.json());
 // Create db scheme
 let workScheme = mongoose.Schema({
   company: String,
-  title: String
+  title: String,
+  period: String
 });
 
 // Create scheme model
@@ -72,7 +73,8 @@ router.post('/', function(req, res, next) {
   // Create a new work
   let newWork = new Work({ 
       company: req.body.company, 
-      title: req.body.title
+      title: req.body.title,
+      period: req.body.period
   });	
 
   // Save new work to db
