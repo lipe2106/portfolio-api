@@ -73,7 +73,7 @@ router.post('/', function(req, res, next) {
   // Create a new course
   let newCourse = new Course({ 
       name: req.body.name, 
-      syllabus: req.body.description,
+      syllabus: req.body.syllabus,
       knowledge: req.body.knowledge
   });	
 

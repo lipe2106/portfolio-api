@@ -14,6 +14,7 @@ router.use(bodyParser.json());
 let projectScheme = mongoose.Schema({
   name: String,
   description: String,
+  image: String,
   link: String
 });
 
@@ -74,6 +75,7 @@ router.post('/', function(req, res, next) {
   let newProject = new Project({ 
       name: req.body.name, 
       description: req.body.description,
+      image: req.body.image,
       link: req.body.link
   });	
 
