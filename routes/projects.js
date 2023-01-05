@@ -13,8 +13,13 @@ router.use(bodyParser.json());
 // Create db scheme
 let projectScheme = mongoose.Schema({
   name: String,
+  path: String,
   description: String,
-  image: String,
+  image1: String,
+  image2: String,
+  image3: String,
+  image4: String,
+  image5: String,
   link: String
 });
 
@@ -74,8 +79,13 @@ router.post('/', function(req, res, next) {
   // Create a new project
   let newProject = new Project({ 
       name: req.body.name, 
+      path: req.body.path,
       description: req.body.description,
-      image: req.body.image,
+      image1: req.body.image,
+      image2: req.body.image,
+      image3: req.body.image,
+      image4: req.body.image,
+      image5: req.body.image,
       link: req.body.link
   });	
 
