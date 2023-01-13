@@ -15,11 +15,6 @@ let projectScheme = mongoose.Schema({
   name: String,
   path: String,
   description: String,
-  image1: String,
-  image2: String,
-  image3: String,
-  image4: String,
-  image5: String,
   link: String
 });
 
@@ -81,11 +76,6 @@ router.post('/', function(req, res, next) {
       name: req.body.name, 
       path: req.body.path,
       description: req.body.description,
-      image1: req.body.image,
-      image2: req.body.image,
-      image3: req.body.image,
-      image4: req.body.image,
-      image5: req.body.image,
       link: req.body.link
   });	
 
